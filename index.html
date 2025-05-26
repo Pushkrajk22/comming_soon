@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Under Construction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            min-width: 80px;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .construction-animation {
+            position: relative;
+            height: 200px;
+            margin: 30px 0;
+        }
+
+        .building {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 100px;
+            background: #e74c3c;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .roof {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 50px solid #c0392b;
+        }
+
+        .window {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        .window:nth-child(1) {
+            top: 30px;
+            left: 30px;
+        }
+
+        .window:nth-child(2) {
+            top: 30px;
+            right: 30px;
+        }
+
+        .window:nth-child(3) {
+            top: 60px;
+            left: 65px;
+        }
+
+        .crane {
+            position: absolute;
+            bottom: 0;
+            right: 10%;
+            height: 180px;
+            width: 10px;
+            background: #7f8c8d;
+        }
+
+        .crane-arm {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            width: 100px;
+            height: 8px;
+            background: #7f8c8d;
+            transform-origin: right center;
+            animation: craneArmMove 8s infinite ease-in-out;
+        }
+
+        .crane-hook {
+            position: absolute;
+            top: 38px;
+            right: 100px;
+            width: 8px;
+            height: 40px;
+            background: #7f8c8d;
+            animation: craneHookMove 8s infinite ease-in-out;
+        }
+
+        .brick {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            background: #e74c3c;
+            animation: brickFall 8s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        .brick:nth-child(1) {
+            top: 50px;
+            right: 110px;
+            animation-delay: 1s;
+        }
+
+        .brick:nth-child(2) {
+            top: 40px;
+            right: 90px;
+            animation-delay: 3s;
+        }
+
+        .brick:nth-child(3) {
+            top: 60px;
+            right: 130px;
+            animation-delay: 5s;
+        }
+
+        .worker {
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            width: 20px;
+            height: 40px;
+            background: #3498db;
+            border-radius: 10px 10px 0 0;
+            animation: workerMove 8s infinite ease-in-out;
+        }
+
+        .worker:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 20px;
+            height: 10px;
+            background: #f1c40f;
+            border-radius: 50%;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #2ecc71;
+            width: 65%;
+            animation: progressPulse 2s infinite ease-in-out;
+            border-radius: 5px;
+        }
+
+        .contact {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .contact a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @keyframes craneArmMove {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        @keyframes craneHookMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+
+        @keyframes brickFall {
+            0% { transform: translateY(-50px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0; }
+        }
+
+        @keyframes workerMove {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 10px 15px;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .construction-animation {
+                height: 150px;
+            }
+            
+            .crane {
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .countdown {
+                gap: 8px;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+                padding: 8px 10px;
+            }
+            
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+            
+            .construction-animation {
+                height: 120px;
+            }
+            
+            .crane {
+                height: 110px;
+                right: 5%;
+            }
+            
+            .crane-arm {
+                width: 70px;
+            }
+            
+            .building {
+                width: 120px;
+            }
+            
+            .roof {
+                border-left: 60px solid transparent;
+                border-right: 60px solid transparent;
+                border-bottom: 40px solid #c0392b;
+                bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Under Construction</h1>
+        <p>We're working hard to bring you an amazing experience. Our site will be ready soon!</p>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+	<!--
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+	-->
+        
+        <div class="construction-animation">
+            <div class="building">
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+            </div>
+            <div class="roof"></div>
+            <div class="crane">
+                <div class="crane-arm"></div>
+                <div class="crane-hook"></div>
+            </div>
+            <div class="brick"></div>
+            <div class="brick"></div>
+            <div class="brick"></div>
+            <div class="worker"></div>
+        </div>
+        
+        <div class="contact">
+            Need to get in touch? Email us at <a href="mailto:parthivgandhi4@gmail.com">parthivgandhi4@gmail.com
+</a>
+        </div>
+    </div>
+
+    <script>
+        // Set the date we're counting down to (7 days from now)
+        const countDownDate = new Date();
+        countDownDate.setDate(countDownDate.getDate() + 7);
+
+        // Update the count down every 1 second
+        const x = setInterval(function() {
+            // Get today's date and time
+            const now = new Date().getTime();
+            
+            // Find the distance between now and the count down date
+            const distance = countDownDate - now;
+            
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
